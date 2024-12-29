@@ -20,7 +20,12 @@ export default function App() {
         if (result.success) {
           setAuthenticated(true); // Authentication successful
         } else {
-          Alert.alert('Authentication failed.'); // Authentication failed
+          Alert.alert('Authentication failed.', 'Please authenticate to continue.', [
+            {
+              text: 'OK',
+              onPress: () => checkBiometricAuthentication(), // Retry authentication when 'OK' is clicked
+            },
+          ]);
         }
       } else {
         Alert.alert('Fingerprint authentication is not supported on this device.');
@@ -44,14 +49,7 @@ export default function App() {
     };
   }, [canGoBack]);
 
-  if (!authenticated) {
-    return (
-      <View style={styles.container}>
-        <StatusBar hidden={true} />
-        <Button title="" onPress={() => setAuthenticated(true)} />
-      </View>
-    );
-  }
+ 
 
   return (
     <View style={styles.container}>
